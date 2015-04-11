@@ -1,2 +1,4 @@
-# webapp_multi_ynh
-multi instances webapp for yunohost
+Multi Instances Web App
+-------------------
+
+No FTP Support
