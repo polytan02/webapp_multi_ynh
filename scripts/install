@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Retrieve arguments
-app=webapp_multi
+app=webapp_multi_inst
 domain=$1
 path=$2
 user=$3
@@ -15,7 +15,7 @@ then
 	sitename="root"
 fi
 
-final_path=/var/www/$app\_$domain\_$sitename
+final_path=/var/www/webapp\_multi/$domain/$sitename
 
 
 # Check domain/path availability
@@ -49,7 +49,7 @@ sudo yunohost app setting $app user -v $user
 
 # Creation of folder
 sudo rm -rf $final_path
-sudo mkdir $final_path
+sudo mkdir -p $final_path
 
 # Base site
 sudo cp ../sources/index.html $final_path/
@@ -94,7 +94,9 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$sitename.conf
 sudo yunohost app setting $app is_public -v "$is_public"
 if [ "$is_public" = "Yes" ];
 then
-    sudo yunohost app setting $app skipped_uris -v "/"
+	sudo yunohost app setting $app skipped_uris -v "/"
+else
+	sudo yunohost app setting $app protected_uris -v "/"
 fi
 
 # Reload Nginx and regenerate SSOwat conf

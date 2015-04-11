@@ -1,13 +1,13 @@
 #!/bin/bash
 
-app=webapp_multi
+app=webapp_multi_inst
 
 user=$(sudo yunohost app setting $app user)
 path=$(sudo yunohost app setting $app path)
+sitename=$(sudo yunohost app setting $app sitename)
 domain=$(sudo yunohost app setting $app domain)
 final_path=$(sudo yunohost app setting $app final_path)
 
-sitename=$(echo $path | cut -d '/' -f 2)
 
 # Suppression du dossier de la webapp
 sudo rm -rf $final_path
@@ -15,11 +15,16 @@ sudo rm -rf $final_path
 # Suppression de la config nginx de la webapp
 sudo rm -f /etc/nginx/conf.d/$domain.d/$sitename.conf
 
-# Vérifie si le dossier parent est vide. Ce qui signifie que toutes les webapp ont été désinstallées. Ainsi que le client ftp net2ftp.
-#if test -z "$(ls $parent_dir | head -n1)"
-#then
-#    sudo rmdir $parent_dir
-#fi
+# We check if folders are empty and if yes we delete them
+if test -z "$(ls /var/www/webapp_multi/$domain | head -n1)"
+then
+	sudo rmdir /var/www/webapp_multi/$domain
+fi
+
+if test -z "$(ls /var/www/webapp_multi/ | head -n1)"
+then
+	sudo rmdir /var/www/webapp_multi
+fi
 
 sudo service nginx reload
 sudo yunohost app ssowatconf
