@@ -2,7 +2,7 @@
 
 app=webapp_multi_inst
 
-user=$(sudo yunohost app setting $app user)
+#user=$(sudo yunohost app setting $app user)
 path=$(sudo yunohost app setting $app path)
 sitename=$(sudo yunohost app setting $app sitename)
 domain=$(sudo yunohost app setting $app domain)

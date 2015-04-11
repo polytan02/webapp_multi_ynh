@@ -1,6 +1,6 @@
 {
     "name": "Multi Instances Webapp",
-    "id": "webapp_multi_inst",
+    "id": "webapp_multi",
     "description": {
         "en": "Multi Instances Web App without FTP access",
         "fr": "Multi Instances Web App vide sans accès FTP"
@@ -28,6 +28,14 @@
                 },
                 "example": "/site",
                 "default": "/site"
+            },
+            {
+                "name": "admin",
+                "ask": {
+                    "en": "Choose the YunoHost user",
+                    "fr": "Choisissez l'utilisateur YunoHost associé"
+                },
+                "example": "johndoe"
             },
             {
                 "name": "is_public",
