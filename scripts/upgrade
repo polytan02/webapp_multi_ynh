@@ -1,16 +1,17 @@
 #!/bin/bash
 
 # Retrieve arguments
-domain=$(sudo yunohost app setting my_webapp domain)
-path=$(sudo yunohost app setting my_webapp path)
-user=$(sudo yunohost app setting my_webapp ftp_user)
-is_public=$(sudo yunohost app setting my_webapp is_public)
+app=webapp_multi
 
-name=$(echo $2 | cut -d '/' -f 2)
-parent_dir=/var/www/webapp_$user
-final_path=$parent_dir$path
+domain=$(sudo yunohost app setting $app domain)
+path=$(sudo yunohost app setting $app path)
+sitename=$(sudo yunohost app setting $app sitename)
+user=$(sudo yunohost app setting $app user)
+is_public=$(sudo yunohost app setting $app is_public)
+final_path=$(sudo yunohost app setting $app final_path)
 
-netftp_path=/ftp_webapp_$user
+
+#netftp_path=/ftp_webapp_$user
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
@@ -18,10 +19,10 @@ sed -i "s@ALIASTOCHANGE@$final_path/@g" ../conf/nginx.conf
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$name.conf
 
 # Make app public if necessary
-sudo yunohost app setting my_webapp is_public -v "$is_public"
+sudo yunohost app setting $app is_public -v "$is_public"
 if [ "$is_public" = "Yes" ];
 then
-    sudo yunohost app setting my_webapp skipped_uris -v "/"
+    sudo yunohost app setting $app skipped_uris -v "/"
 fi
 
 # Reload Nginx and regenerate SSOwat conf

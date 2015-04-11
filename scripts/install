@@ -15,8 +15,7 @@ then
 	sitename="root"
 fi
 
-folder=$app_$domain_$sitename
-final_path=/var/www/$folder
+final_path=/var/www/$app\_$domain\_$sitename
 
 
 # Check domain/path availability
