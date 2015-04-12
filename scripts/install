@@ -6,6 +6,9 @@ domain=$1
 path=$2
 is_public=$3
 
+# Removal of trailing /
+path=${path%/}
+
 # sitename == path without "/"
 sitename=$(echo $path | cut -d '/' -f 2)
 
