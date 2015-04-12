@@ -6,7 +6,7 @@
         "fr": "Multi Instances Web App vide sans accès FTP"
     },
     "maintainer": {
-        "name": "Polytan02",
+        "name": "polytan02",
         "email": "polytan02@mcgva.org"
     },
     "multi_instance": "true",
@@ -33,7 +33,7 @@
                 "name": "is_public",
                 "ask": {
                     "en": "Is it a public website ?",
-                    "fr": "Est-ce un site public ?"
+                    "fr": "Est-ce un site publique ?"
                 },
                 "choices": ["Yes", "No"],
                 "default": "Yes"
