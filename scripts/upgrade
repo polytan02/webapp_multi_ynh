@@ -18,6 +18,14 @@ sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sed -i "s@ALIASTOCHANGE@$final_path/@g" ../conf/nginx.conf
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$name.conf
 
+# We adjust permissions
+sudo chmod 775 /var/www/webapp\_multi
+sudo chmod 775 /var/www/webapp\_multi/$domain
+sudo chmod 775 -R $final_path
+sudo chown www-data:www-data /var/www/webapp\_multi
+sudo chown www-data:www-data /var/www/webapp\_multi/$domain
+sudo chown -hR www-data:www-data $final_path
+
 # Make app public if necessary
 sudo yunohost app setting $app is_public -v "$is_public"
 if [ "$is_public" = "Yes" ];
