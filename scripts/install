@@ -6,19 +6,22 @@ domain=$1
 path=$2
 is_public=$3
 
-# Removal of trailing /
-path=${path%/}
-
-# sitename == path without "/"
-sitename=$(echo $path | cut -d '/' -f 2)
-
 if [ $path = "/" ]
 then
 	sitename="root"
+	sudo yunohost app setting $app path -v $path
+else
+	# sitename == path without any "/"
+	sitename=$(echo $path | cut -d '/' -f 2)
 fi
 
 final_path=/var/www/webapp\_multi/$domain/$sitename
 
+sudo yunohost app setting $app path -v $path
+
+# Removal of trailing /
+# path can be null but not really an issue for the following commands
+path=${path%/}
 
 # Check domain/path availability
 sudo yunohost app checkurl $domain$path -a $app
@@ -28,7 +31,6 @@ fi
 
 sudo yunohost app setting $app final_path -v $final_path
 sudo yunohost app setting $app domain -v $domain
-sudo yunohost app setting $app path -v $path
 sudo yunohost app setting $app sitename -v $sitename
 
 # Creation of folder
@@ -56,8 +58,6 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$sitename.conf
 if [ $is_public = "Yes" ];
 then
 	sudo yunohost app setting $app unprotected_uris -v "/"
-#else
-#	sudo yunohost app setting $app protected_uris -v "/"
 fi
 
 # Reload Nginx and regenerate SSOwat conf
