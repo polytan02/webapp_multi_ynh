@@ -9,7 +9,7 @@
         "name": "polytan02",
         "email": "polytan02@mcgva.org"
     },
-    "multi_instance": "true",
+    "multi_instance": "false",
     "arguments": {
         "install" : [
             {
