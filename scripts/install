@@ -36,8 +36,12 @@ sudo mkdir -p $final_path
 sudo cp ../sources/index.html $final_path/
 
 # Set permissions
+sudo chmod 775 /var/www/webapp\_multi
+sudo chmod 775 /var/www/webapp\_multi/$domain
 sudo chmod 775 -R $final_path
-sudo chown -hR www-data:www-data /var/www/webapp\_multi
+sudo chown www-data:www-data /var/www/webapp\_multi
+sudo chown www-data:www-data /var/www/webapp\_multi/$domain
+sudo chown -hR www-data:www-data $final_path
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
