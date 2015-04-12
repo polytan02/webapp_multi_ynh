@@ -20,7 +20,7 @@ final_path=/var/www/webapp\_multi/$domain/$sitename
 sudo yunohost app setting $app path -v $path
 
 # Removal of trailing /
-# path can be null but not really an issue for the following commands
+# path can be null but not really an issue for the remaining commands
 path=${path%/}
 
 # Check domain/path availability
