@@ -18,6 +18,12 @@ sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sed -i "s@ALIASTOCHANGE@$final_path/@g" ../conf/nginx.conf
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$name.conf
 
+sed -i "s@NAMETOCHANGE@$app@g" ../conf/php-fpm.conf
+finalphpconf=/etc/php5/fpm/pool.d/$app.conf
+sudo cp ../conf/php-fpm.conf $finalphpconf
+sudo chown root: $finalphpconf
+sudo chmod 644 $finalphpconf
+
 # We adjust permissions
 sudo chmod 775 /var/www/webapp\_multi
 sudo chmod 775 /var/www/webapp\_multi/$domain
@@ -36,5 +42,6 @@ else
 fi
 
 # Reload Nginx and regenerate SSOwat conf
+sudo servive php5-fpm reload
 sudo service nginx reload
 sudo yunohost app ssowatconf

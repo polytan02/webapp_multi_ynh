@@ -67,5 +67,6 @@ then
 fi
 
 # Reload Nginx and regenerate SSOwat conf
+sudo service php5-fpm restart
 sudo service nginx reload
 sudo yunohost app ssowatconf

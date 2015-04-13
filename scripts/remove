@@ -27,5 +27,6 @@ then
 	sudo rmdir /var/www/webapp_multi
 fi
 
+sudo service php5-fpm restart
 sudo service nginx reload
 sudo yunohost app ssowatconf
