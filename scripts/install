@@ -30,7 +30,7 @@ if [[ ! $? -eq 0 ]]; then
 fi
 
 sudo yunohost app setting $app final_path -v $final_path
-sudo yunohost app setting $app domain -v $domain
+#sudo yunohost app setting $app domain -v $domain
 sudo yunohost app setting $app sitename -v $sitename
 
 # Creation of folder
