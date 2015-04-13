@@ -22,7 +22,6 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$name.conf
 
 # php5-fpm configuration
 sed -i "s@NAMETOCHANGE@$domain\_$sitename@g" ../conf/php-fpm.conf
-sed -i "s@LOGNAMETOCHANGE@$domain\_$sitename@g" ../conf/php-fpm.conf
 sed -i "s@FOLDERNAMETOCHANGE@$domain/$sitename@g" ../conf/php-fpm.conf
 
 finalphpconf=/etc/php5/fpm/pool.d/$domain\_$sitename.conf
