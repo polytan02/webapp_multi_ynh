@@ -3,7 +3,7 @@
 # Retrieve arguments
 app=webapp_multi_inst
 
-domain=$(sudo yunohost app setting $app domain)
+#domain=$(sudo yunohost app setting $app domain)
 path=$(sudo yunohost app setting $app path)
 sitename=$(sudo yunohost app setting $app sitename)
 #user=$(sudo yunohost app setting $app user)
