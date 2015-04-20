@@ -6,10 +6,11 @@ domain=$1
 path=$2
 is_public=$3
 
+sudo yunohost app setting $app path -v $path
+
 if [ $path = "/" ]
 then
 	sitename="root"
-	sudo yunohost app setting $app path -v $path
 else
 	# sitename == path without any "/"
 	sitename=$(echo $path | cut -d '/' -f 2)
@@ -19,9 +20,6 @@ else
 fi
 
 final_path=/var/www/webapp\_multi/$domain/$sitename
-
-sudo yunohost app setting $app path -v $path
-
 
 # Check domain/path availability
 sudo yunohost app checkurl $domain$path -a $app
