@@ -13,15 +13,15 @@ then
 else
 	# sitename == path without any "/"
 	sitename=$(echo $path | cut -d '/' -f 2)
+	# Removal of trailing /
+	# path can be null but not really an issue for the remaining commands
+	path=${path%/}
 fi
 
 final_path=/var/www/webapp\_multi/$domain/$sitename
 
 sudo yunohost app setting $app path -v $path
 
-# Removal of trailing /
-# path can be null but not really an issue for the remaining commands
-path=${path%/}
 
 # Check domain/path availability
 sudo yunohost app checkurl $domain$path -a $app
@@ -34,7 +34,7 @@ sudo yunohost app setting $app final_path -v $final_path
 sudo yunohost app setting $app sitename -v $sitename
 
 # Creation of folder
-sudo rm -rf $final_path
+#sudo rm -rf $final_path
 sudo mkdir -p $final_path
 
 # Base site
