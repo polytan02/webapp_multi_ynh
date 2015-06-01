@@ -36,6 +36,8 @@ sudo yunohost app setting $app sitename -v $sitename
 sudo mkdir -p $final_path
 
 # Base site
+sed -i "s@DOMAINTOCHANGE@$domain@g" ../sources/index.html
+sed -i "s@SITETOCHANGE@$sitename@g" ../sources/index.html
 sudo cp ../sources/index.html $final_path/
 
 # Set permissions
