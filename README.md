@@ -1,4 +1,5 @@
-Multi Instances Web App
--------------------
+# Multi Instances Web App
 
 No FTP Support
+
+Simply copy the sources of your web page in /var/www/webapp_multi/$domain/$path/
