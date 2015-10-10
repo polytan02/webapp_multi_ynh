@@ -17,15 +17,19 @@ sudo rm -f /etc/nginx/conf.d/$domain.d/$sitename.conf
 sudo rm -f /etc/php5/fpm/pool.d/$domain\_$sitename.conf
 
 # We check if folders are empty and if yes we delete them
-if test -z "$(ls /var/www/webapp_multi/$domain | head -n1)"
-then
-	sudo rmdir /var/www/webapp_multi/$domain
-fi
+#
+#if test -z "$(ls /var/www/webapp_multi/$domain | head -n1)"
+#then
+#	sudo rmdir /var/www/webapp_multi/$domain
+#fi
+sudo rmdir --ignore-fail-on-non-empty /var/www/webapp_multi/$domain
 
-if test -z "$(ls /var/www/webapp_multi/ | head -n1)"
-then
-	sudo rmdir /var/www/webapp_multi
-fi
+#if test -z "$(ls /var/www/webapp_multi/ | head -n1)"
+#then
+#	sudo rmdir /var/www/webapp_multi
+#fi
+sudo rmdir --ignore-fail-on-non-empty /var/www/webapp_multi
+
 
 sudo service php5-fpm restart
 sudo service nginx reload
