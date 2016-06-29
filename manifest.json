@@ -1,15 +1,25 @@
 {
     "name": "Multi Instances Webapp",
     "id": "webapp_multi_inst",
+    "packaging_format": 1,
     "description": {
         "en": "Multi Instances Web App without FTP access",
         "fr": "Multi Instances Web App vide sans accès FTP"
     },
+    "url": "https://github.com/polytan02/",
+    "license": "GPL-3",
     "maintainer": {
         "name": "polytan02",
         "email": "polytan02@mcgva.org"
     },
-    "multi_instance": "true",
+    "multi_instance": true,
+    "services": [
+        "nginx",
+        "php5-fpm"
+    ],
+    "requirements": {
+         "yunohost": ">= 2.4.0"
+    }
     "arguments": {
         "install" : [
             {
