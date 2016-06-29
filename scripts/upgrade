@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Retrieve arguments
-app=webapp_multi_inst
+#app=webapp_multi_inst
+app=$YNH_APP_INSTANCE_NAME
 
 #domain=$(sudo yunohost app setting $app domain)
 path=$(sudo yunohost app setting $app path)

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-app=webapp_multi_inst
+#app=webapp_multi_inst
+app=$YNH_APP_INSTANCE_NAME
 
 #user=$(sudo yunohost app setting $app user)
 path=$(sudo yunohost app setting $app path)
