@@ -19,7 +19,7 @@
     ],
     "requirements": {
          "yunohost": ">= 2.4.0"
-    }
+    },
     "arguments": {
         "install" : [
             {
