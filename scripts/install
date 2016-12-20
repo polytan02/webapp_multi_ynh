@@ -2,10 +2,10 @@
 set -eu
 
 # Charge les fonctions génériques habituellement utilisées dans le script
-source .functions
+source fonctions
 
 # Active trap pour arrêter le script si une erreur est détectée.
-#TRAP_ON
+TRAP_ON
 
 # Source app helpers
 source /usr/share/yunohost/helpers
