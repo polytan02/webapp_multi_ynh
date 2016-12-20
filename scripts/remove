@@ -33,6 +33,6 @@ sudo rmdir --ignore-fail-on-non-empty /var/www/webapp_multi/$domain
 sudo rmdir --ignore-fail-on-non-empty /var/www/webapp_multi
 
 
-sudo service php5-fpm restart
+sudo service php5-fpm reload
 sudo service nginx reload
 sudo yunohost app ssowatconf

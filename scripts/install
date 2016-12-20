@@ -20,7 +20,7 @@ is_public=$YNH_APP_ARG_IS_PUBLIC
 CHECK_VAR "$app" "app name not set"
 
 # Check the path value and correct it (adds / at begining and removes it at the end)
-CHECK_PATH	
+CHECK_PATH
 # Check domain and path availibility
 CHECK_DOMAINPATH
 # Check destination folder is not used already
@@ -84,6 +84,6 @@ then
 fi
 
 # Reload Nginx and regenerate SSOwat conf
-sudo service php5-fpm restart
+sudo service php5-fpm reload
 sudo service nginx reload
 sudo yunohost app ssowatconf
