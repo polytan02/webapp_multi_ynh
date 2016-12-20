@@ -1,19 +1,36 @@
 #!/bin/bash
+set -eu
+
+# Charge les fonctions génériques habituellement utilisées dans le script
+source fonctions
+
+# Active trap pour arrêter le script si une erreur est détectée.
+TRAP_ON
+
+# Source app helpers
+source /usr/share/yunohost/helpers
 
 # Retrieve arguments
-#app=webapp_multi_inst
 app=$YNH_APP_INSTANCE_NAME
-domain=$1
-path=$2
-is_public=$3
+domain=$YNH_APP_ARG_DOMAIN
+path=$YNH_APP_ARG_PATH
+is_public=$YNH_APP_ARG_IS_PUBLIC
 
-sudo yunohost app setting $app path -v $path
+# We check variables are not empty
+CHECK_VAR "$app" "app name not set"
 
+# Check the path value and correct it (adds / at begining and removes it at the end)
+CHECK_PATH	
+# Check domain and path availibility
+CHECK_DOMAINPATH
+# Check destination folder is not used already
+CHECK_FINALPATH
+
+# Definition of sitename for further use
 if [ $path = "/" ]
 then
 	sitename="root"
 else
-	# sitename == path without any "/"
 	sitename=$(echo $path | cut -d '/' -f 2)
 	# Removal of trailing /
 	# path can be null but not really an issue for the remaining commands
@@ -22,15 +39,12 @@ fi
 
 final_path=/var/www/webapp\_multi/$domain/$sitename
 
-# Check domain/path availability
-sudo yunohost app checkurl $domain$path -a $app
-if [[ ! $? -eq 0 ]]; then
-    exit 1
-fi
+# Save app settings
+ynh_app_setting_set "$app" domain "$domain"
+ynh_app_setting_set "$app" is_public "$is_public"
+ynh_app_setting_set "$app" sitename "$sitename"
+ynh_app_setting_set "$app" final_path "$final_path"
 
-sudo yunohost app setting $app final_path -v $final_path
-#sudo yunohost app setting $app domain -v $domain
-sudo yunohost app setting $app sitename -v $sitename
 
 # Creation of folder
 #sudo rm -rf $final_path
@@ -39,7 +53,7 @@ sudo mkdir -p $final_path
 # Base site
 sed -i "s@DOMAINTOCHANGE@$domain@g" ../sources/index.html
 sed -i "s@SITETOCHANGE@$sitename@g" ../sources/index.html
-sudo cp ../sources/index.html $final_path/
+sudo cp ../sources/. $final_path/
 
 # Set permissions
 sudo chmod 775 /var/www/webapp\_multi
@@ -63,10 +77,10 @@ sudo chown root: $finalphpconf
 sudo chmod 644 $finalphpconf
 
 # Make app public if necessary
-sudo yunohost app setting $app is_public -v "$is_public"
+is_public=$(ynh_app_setting_get nom_app is_public)
 if [ "$is_public" = "Yes" ];
 then
-    sudo yunohost app setting $app skipped_uris -v "/"
+	ynh_app_setting_set $app skipped_uris "/"
 fi
 
 # Reload Nginx and regenerate SSOwat conf

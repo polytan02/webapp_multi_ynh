@@ -1,14 +1,25 @@
 #!/bin/bash
+set -eu
 
-#app=webapp_multi_inst
+# Charge les fonctions génériques habituellement utilisées dans le script
+source fonctions
+
+# Active trap pour arrêter le script si une erreur est détectée.
+TRAP_ON
+
+# Source app helpers
+source /usr/share/yunohost/helpers
+
+# We retrieve app parameters
 app=$YNH_APP_INSTANCE_NAME
 
-#user=$(sudo yunohost app setting $app user)
-path=$(sudo yunohost app setting $app path)
-sitename=$(sudo yunohost app setting $app sitename)
-domain=$(sudo yunohost app setting $app domain)
-final_path=$(sudo yunohost app setting $app final_path)
+# We check variables are not empty
+CHECK_VAR "$app" "app name not set"
 
+path=$(ynh_app_setting_get $app path)
+domain=$(ynh_app_setting_get $app domain)
+final_path=$(ynh_app_setting_get $app final_path)
+sitename=$(ynh_app_setting_get $app sitename)
 
 # Suppression du dossier de la webapp
 sudo rm -rf $final_path
@@ -17,18 +28,8 @@ sudo rm -rf $final_path
 sudo rm -f /etc/nginx/conf.d/$domain.d/$sitename.conf
 sudo rm -f /etc/php5/fpm/pool.d/$domain\_$sitename.conf
 
-# We check if folders are empty and if yes we delete them
-#
-#if test -z "$(ls /var/www/webapp_multi/$domain | head -n1)"
-#then
-#	sudo rmdir /var/www/webapp_multi/$domain
-#fi
+# We remove old files in /var/www/webapp_multi
 sudo rmdir --ignore-fail-on-non-empty /var/www/webapp_multi/$domain
-
-#if test -z "$(ls /var/www/webapp_multi/ | head -n1)"
-#then
-#	sudo rmdir /var/www/webapp_multi
-#fi
 sudo rmdir --ignore-fail-on-non-empty /var/www/webapp_multi
 
 

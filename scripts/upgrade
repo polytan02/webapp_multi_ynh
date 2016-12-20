@@ -1,24 +1,31 @@
 #!/bin/bash
+set -eu
 
-# Retrieve arguments
-#app=webapp_multi_inst
+# Charge les fonctions génériques habituellement utilisées dans le script
+source fonctions
+
+# Active trap pour arrêter le script si une erreur est détectée.
+TRAP_ON
+
+# Source app helpers
+source /usr/share/yunohost/helpers
+
+# We retrieve app parameters
 app=$YNH_APP_INSTANCE_NAME
 
-#domain=$(sudo yunohost app setting $app domain)
-path=$(sudo yunohost app setting $app path)
-sitename=$(sudo yunohost app setting $app sitename)
-#user=$(sudo yunohost app setting $app user)
-is_public=$(sudo yunohost app setting $app is_public)
-final_path=$(sudo yunohost app setting $app final_path)
+# We check variables are not empty
+CHECK_VAR "$app" "app name not set"
 
-
-#netftp_path=/ftp_webapp_$user
+path=$(ynh_app_setting_get $app path)
+domain=$(ynh_app_setting_get $app domain)
+final_path=$(ynh_app_setting_get $app final_path)
+sitename=$(ynh_app_setting_get $app sitename)
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sed -i "s@ALIASTOCHANGE@$final_path/@g" ../conf/nginx.conf
 sed -i "s@NAMETOCHANGE@$domain\_$sitename@g" ../conf/nginx.conf
-sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$name.conf
+sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$sitename.conf
 
 
 # php5-fpm configuration
@@ -38,13 +45,14 @@ sudo chown www-data:www-data /var/www/webapp\_multi
 sudo chown www-data:www-data /var/www/webapp\_multi/$domain
 sudo chown -hR www-data:www-data $final_path
 
+
 # Make app public if necessary
-sudo yunohost app setting $app is_public -v "$is_public"
+is_public=$(ynh_app_setting_get nom_app is_public)
 if [ "$is_public" = "Yes" ];
 then
-    sudo yunohost app setting $app skipped_uris -v "/"
+	ynh_app_setting_set $app skipped_uris "/"
 else
-    sudo yunohost app setting $app protected_uris -v "/"
+	ynh_app_setting_set $app protected_uris "/"
 fi
 
 # Reload Nginx and regenerate SSOwat conf
