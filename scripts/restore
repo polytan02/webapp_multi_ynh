@@ -13,20 +13,25 @@ app=$YNH_APP_INSTANCE_NAME
 source /usr/share/yunohost/helpers
 
 # Retrieve old app settings
-domain=$(ynh_app_setting_get "$app" domain)
-path=$(ynh_app_setting_get "$app" path)
+final_path=$(ynh_app_setting_get $app final_path)
+path=$(ynh_app_setting_get $app path)
+sitename=$(ynh_app_setting_get $app sitename)
+domain=$(ynh_app_setting_get $app domain)
+is_public=$(ynh_app_setting_get $app is_public)
+
+
 
 # Check domain/path availability
 sudo yunohost app checkurl "${domain}${path}" -a "$app" \
     || ynh_die "Path not available: ${domain}${path}"
 
 # Restore sources & data
-src_path="/var/www/${app}"
-sudo cp -a ./sources "$src_path"
+sudo mkdir -p $final_path
+sudo cp -a ./sources/* $final_path/
 
 # Restore permissions to app files
 # you may need to make some file and/or directory writeable by www-data (nginx user)
-sudo chown -R root: "$src_path"
+sudo chown -R root: $final_path
 
 ### MySQL (remove if not used) ###
 # If a MySQL database is used:
@@ -39,14 +44,25 @@ sudo chown -R root: "$src_path"
 ### MySQL end ###
 
 # Restore NGINX configuration
-sudo cp -a ./nginx.conf "/etc/nginx/conf.d/${domain}.d/${app}.conf"
+sudo cp -a ./nginx.conf /etc/nginx/conf.d/$domain.d/$sitename.conf
 
 ### PHP (remove if not used) ###
 # If a dedicated php-fpm process is used:
 # # Copy PHP-FPM pool configuration and reload the service
- sudo cp -a ./php-fpm.conf "/etc/php5/fpm/pool.d/${app}.conf"
- sudo service php5-fpm reload
+finalphpconf=/etc/php5/fpm/pool.d/$domain\_$sitename.conf
+sudo cp -a ./php-fpm.conf $finalphpconf
 ### PHP end ###
+
+# Make app public if necessary
+is_public=$(ynh_app_setting_get $app is_public)
+if [ "$is_public" = "Yes" ];
+then
+        ynh_app_setting_set $app skipped_uris "/"
+fi
+
 
 # Restart webserver
 sudo service nginx reload
+sudo service php5-fpm reload
+sudo yunohost app ssowatconf
+
