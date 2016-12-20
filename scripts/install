@@ -5,7 +5,7 @@ set -eu
 source .functions
 
 # Active trap pour arrêter le script si une erreur est détectée.
-TRAP_ON
+#TRAP_ON
 
 # Source app helpers
 source /usr/share/yunohost/helpers
