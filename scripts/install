@@ -77,7 +77,7 @@ sudo chown root: $finalphpconf
 sudo chmod 644 $finalphpconf
 
 # Make app public if necessary
-is_public=$(ynh_app_setting_get nom_app is_public)
+is_public=$(ynh_app_setting_get $app is_public)
 if [ "$is_public" = "Yes" ];
 then
 	ynh_app_setting_set $app skipped_uris "/"
