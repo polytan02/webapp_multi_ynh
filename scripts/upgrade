@@ -2,7 +2,7 @@
 set -eu
 
 # Charge les fonctions génériques habituellement utilisées dans le script
-source fonctions
+source .functions
 
 # Active trap pour arrêter le script si une erreur est détectée.
 TRAP_ON
