@@ -23,8 +23,8 @@ finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 
 
 # Check domain/path availability
-sudo yunohost app checkurl "${domain}${path}" -a "$app" \
-    || ynh_die "Path not available: ${domain}${path}"
+#sudo yunohost app checkurl "${domain}${path}" -a "$app" \
+#    || ynh_die "Path not available: ${domain}${path}"
 
 # Restore sources & data
 sudo mkdir -p $final_path
@@ -32,7 +32,7 @@ sudo cp -a ./sources/* $final_path/
 
 # Restore permissions to app files
 # you may need to make some file and/or directory writeable by www-data (nginx user)
-sudo chown -R root: $final_path
+sudo chown -R www-data:www-data $final_path
 
 ### MySQL (remove if not used) ###
 # If a MySQL database is used:
