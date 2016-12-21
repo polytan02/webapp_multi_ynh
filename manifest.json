@@ -1,10 +1,10 @@
 {
-    "name": "Multi Instances Webapp",
+    "name": "Webapp Multi Instances",
     "id": "webapp_multi_inst",
     "packaging_format": 1,
     "description": {
-        "en": "Multi Instances Web App without FTP access",
-        "fr": "Multi Instances Web App vide sans accès FTP"
+        "en": "Web App Multi Instances without FTP access",
+        "fr": "Web App Multi Instances vide sans accès FTP"
     },
     "url": "https://github.com/polytan02/",
     "license": "free",
