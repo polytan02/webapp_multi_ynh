@@ -27,16 +27,31 @@ finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sed -i "s@ALIASTOCHANGE@$final_path/@g" ../conf/nginx.conf
 sed -i "s@NAMETOCHANGE@$domain\_$sitename@g" ../conf/nginx.conf
-sudo cp ../conf/nginx.conf $finalnginxconf
+
+# We only replace the file if it doesn't exists already
+if [ -f $finalnginxconf ];
+then
+   echo "File ${finalnginxconf} exists, we don't replace it."
+else
+   sudo cp ../conf/nginx.conf $finalnginxconf
+fi
+
 
 
 # php5-fpm configuration
 sed -i "s@NAMETOCHANGE@$domain\_$sitename@g" ../conf/php-fpm.conf
 sed -i "s@FOLDERTOCHANGE@webapp_multi\_$domain/$sitename@g" ../conf/php-fpm.conf
 
-sudo cp ../conf/php-fpm.conf $finalphpconf
-sudo chown root: $finalphpconf
-sudo chmod 644 $finalphpconf
+# We only replace the file if it doesn't exists already
+if [ -f $finalphpconf ];
+then
+   echo "File ${finalphpconf} exists, we don't replace it."
+else
+   sudo cp ../conf/php-fpm.conf $finalphpconf
+   sudo chown root: $finalphpconf
+   sudo chmod 644 $finalphpconf
+fi
+
 
 # We adjust permissions
 sudo chmod 775 /var/www/webapp\_multi
