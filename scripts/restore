@@ -18,7 +18,8 @@ path=$(ynh_app_setting_get $app path)
 sitename=$(ynh_app_setting_get $app sitename)
 domain=$(ynh_app_setting_get $app domain)
 is_public=$(ynh_app_setting_get $app is_public)
-
+finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
+finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 
 
 # Check domain/path availability
@@ -44,12 +45,11 @@ sudo chown -R root: $final_path
 ### MySQL end ###
 
 # Restore NGINX configuration
-sudo cp -a ./nginx.conf /etc/nginx/conf.d/$domain.d/$sitename.conf
+sudo cp -a ./nginx.conf $finalnginxconf
 
 ### PHP (remove if not used) ###
 # If a dedicated php-fpm process is used:
 # # Copy PHP-FPM pool configuration and reload the service
-finalphpconf=/etc/php5/fpm/pool.d/$domain\_$sitename.conf
 sudo cp -a ./php-fpm.conf $finalphpconf
 ### PHP end ###
 

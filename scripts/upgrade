@@ -20,19 +20,20 @@ path=$(ynh_app_setting_get $app path)
 domain=$(ynh_app_setting_get $app domain)
 final_path=$(ynh_app_setting_get $app final_path)
 sitename=$(ynh_app_setting_get $app sitename)
+finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
+finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sed -i "s@ALIASTOCHANGE@$final_path/@g" ../conf/nginx.conf
 sed -i "s@NAMETOCHANGE@$domain\_$sitename@g" ../conf/nginx.conf
-sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$sitename.conf
+sudo cp ../conf/nginx.conf $finalnginxconf
 
 
 # php5-fpm configuration
 sed -i "s@NAMETOCHANGE@$domain\_$sitename@g" ../conf/php-fpm.conf
 sed -i "s@FOLDERTOCHANGE@webapp_multi\_$domain/$sitename@g" ../conf/php-fpm.conf
 
-finalphpconf=/etc/php5/fpm/pool.d/$domain\_$sitename.conf
 sudo cp ../conf/php-fpm.conf $finalphpconf
 sudo chown root: $finalphpconf
 sudo chmod 644 $finalphpconf

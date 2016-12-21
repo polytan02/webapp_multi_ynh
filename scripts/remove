@@ -20,13 +20,15 @@ path=$(ynh_app_setting_get $app path)
 domain=$(ynh_app_setting_get $app domain)
 final_path=$(ynh_app_setting_get $app final_path)
 sitename=$(ynh_app_setting_get $app sitename)
+finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
+finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 
 # Suppression du dossier de la webapp
 sudo rm -rf $final_path
 
 # Suppression de la config nginx de la webapp
-sudo rm -f /etc/nginx/conf.d/$domain.d/$sitename.conf
-sudo rm -f /etc/php5/fpm/pool.d/$domain\_$sitename.conf
+sudo rm -f $finalnginxconf
+sudo rm -f $finalphpconf
 
 # We remove old files in /var/www/webapp_multi
 sudo rmdir --ignore-fail-on-non-empty /var/www/webapp_multi/$domain

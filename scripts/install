@@ -21,10 +21,6 @@ CHECK_VAR "$app" "app name not set"
 
 # Check the path value and correct it (adds / at begining and removes it at the end)
 CHECK_PATH
-# Check domain and path availibility
-CHECK_DOMAINPATH
-# Check destination folder is not used already
-CHECK_FINALPATH
 
 # Definition of sitename for further use
 if [ $path = "/" ]
@@ -37,6 +33,11 @@ else
 	path=${path%/}
 fi
 
+# Check domain and path availibility
+CHECK_DOMAINPATH
+# Check destination folder is not used already
+CHECK_FINALPATH
+
 final_path=/var/www/webapp\_multi/$domain/$sitename
 
 # Define variables and Save app settings
@@ -48,7 +49,7 @@ ynh_app_setting_set "$app" final_path "$final_path"
 finalnginxconf="/etc/nginx/conf.d/${domain}.d/${sitename}.conf"
 ynh_app_setting_set "$app" finalnginxconf "$finalnginxconf"
 
-finalphpconf="/etc/php5/fpm/pool.d/${domain}\_${sitename}.conf"
+finalphpconf="/etc/php5/fpm/pool.d/${domain}_${sitename}.conf"
 ynh_app_setting_set "$app" finalphpconf "$finalphpconf"
 
 
