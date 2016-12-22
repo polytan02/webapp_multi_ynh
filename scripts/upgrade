@@ -23,20 +23,20 @@ sitename=$(ynh_app_setting_get $app sitename)
 finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
 finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 
-if [ -f $finalnginxconf ];
+if [ -z "$finalnginxconf" ];
 then
-   echo "${finalnginxconf} exists, we don't create it."
-else
    finalnginxconf="/etc/nginx/conf.d/${domain}.d/${sitename}.conf"
    ynh_app_setting_set "$app" finalnginxconf "$finalnginxconf"
+else
+      echo "${finalnginxconf} exists, we don't create it."
 fi
 
-if [ -f $finalphpconf ];
+if [ -z "$finalphpconf" ];
 then
-   echo "${finalphpconf} exists, we don't create it."
-else
    finalphpconf="/etc/php5/fpm/pool.d/${domain}_${sitename}.conf"
    ynh_app_setting_set "$app" finalphpconf "$finalphpconf"
+else
+   echo "${finalphpconf} exists, we don't create it."
 fi
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
