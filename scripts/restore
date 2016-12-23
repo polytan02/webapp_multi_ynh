@@ -29,10 +29,6 @@ finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
 finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 
 
-# Check domain/path availability
-#sudo yunohost app checkurl "${domain}${path}" -a "$app" \
-#    || ynh_die "Path not available: ${domain}${path}"
-
 # Restore sources & data
 sudo mkdir -p $final_path
 sudo cp -a ./sources/* $final_path/
