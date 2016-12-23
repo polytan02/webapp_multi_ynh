@@ -3,8 +3,9 @@
 # Exit on command errors and treat unset variables as an error
 set -eu
 
-# Charge les fonctions génériques habituellement utilisées dans le script
-source fonctions
+TRAP_ON () {    # Activate signal capture
+        trap EXIT_PROPERLY ERR  # Capturing ex it signals on error
+}
 
 # Active trap pour arrêter le script si une erreur est détectée.
 TRAP_ON
