@@ -1,11 +1,11 @@
 #!/bin/bash
-set -eu
+#set -eu
 
 # Charge les fonctions génériques habituellement utilisées dans le script
-source fonctions
+#source fonctions
 
 # Active trap pour arrêter le script si une erreur est détectée.
-TRAP_ON
+#TRAP_ON
 
 # Source app helpers
 source /usr/share/yunohost/helpers
@@ -14,6 +14,11 @@ source /usr/share/yunohost/helpers
 app=$YNH_APP_INSTANCE_NAME
 
 # We check variables are not empty
+CHECK_VAR () {  # Vérifie que la variable n'est pas vide.
+# $1 = Variable à vérifier
+# $2 = Texte à afficher en cas d'erreur
+        test -n "$1" || (echo "$2" >&2 && false)
+}
 CHECK_VAR "$app" "app name not set"
 
 path=$(ynh_app_setting_get $app path)

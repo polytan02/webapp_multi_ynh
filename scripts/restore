@@ -4,14 +4,14 @@
 # will be located in the current directory, regarding the last argument.
 
 # Exit on command errors and treat unset variables as an error
-set -eu
+#set -eu
 
-TRAP_ON () {    # Activate signal capture
-        trap EXIT_PROPERLY ERR  # Capturing ex it signals on error
-}
+#TRAP_ON () {    # Activate signal capture
+#        trap EXIT_PROPERLY ERR  # Capturing ex it signals on error
+#}
 
 # Active trap pour arrêter le script si une erreur est détectée.
-TRAP_ON
+#TRAP_ON
 
 # See comments in install script
 app=$YNH_APP_INSTANCE_NAME
