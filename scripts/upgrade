@@ -4,10 +4,10 @@
 app=$YNH_APP_INSTANCE_NAME
 
 # Backup the current version of the app, restore it if the upgrade fails
-if sudo yunohost backup list | grep -q ${app}-before-upgrade > /dev/null 2>&1; then     # Supprime l'ancienne archive seulement si e$
-        sudo yunohost backup delete ${app}-before-upgrade
-fi
-sudo yunohost backup create --ignore-hooks --apps $app --name ${app}-before-upgrade
+#if sudo yunohost backup list | grep -q ${app}-before-upgrade > /dev/null 2>&1; then     # Supprime l'ancienne archive seulement si e$
+#        sudo yunohost backup delete ${app}-before-upgrade
+#fi
+#sudo yunohost backup create --ignore-hooks --apps $app --name ${app}-before-upgrade
 EXIT_PROPERLY () {
         exit_code=$?
         if [ "$exit_code" -eq 0 ]; then
@@ -19,8 +19,8 @@ EXIT_PROPERLY () {
         sudo yunohost backup restore --ignore-hooks ${app}-before-upgrade --apps $app --force   # Restore the backup if upgrade fail$
         ynh_die "Upgrade failed. The app was restored to the way it was before the failed upgrade."
 }
-set -eu
-trap EXIT_PROPERLY EXIT
+#set -eu
+#trap EXIT_PROPERLY EXIT
 
 # Source app helpers
 source /usr/share/yunohost/helpers
