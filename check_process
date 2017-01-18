@@ -1,13 +1,42 @@
-;; master
+;; Full test including database
     auto_remove=1
-# Commentaire ignoré
     ; Manifest
         domain="$DOMAIN"    (DOMAIN)
         path="$PATH"    (PATH)
         language="fr"
 	is_public="Yes"	(PUBLIC|public=Yes|private=No)
-#        password="$PASSWORD"    (PASSWORD)
-#        port="666"  (PORT)
+	db_create="Yes"
+	db_name="webapp_dbname"
+	db_user="webapp_dbuser"
+	db_pwd="webapp_dbpwd"
+    ; Checks
+        pkg_linter=1
+        setup_sub_dir=1
+        setup_root=1
+        setup_nourl=0
+        setup_private=1
+        setup_public=1
+        upgrade=1
+        backup_restore=1
+        multi_instance=1
+        wrong_user=0
+        wrong_path=1
+        incorrect_path=1
+        corrupt_source=0
+        fail_download_source=0
+        port_already_use=0 (XXXX)
+        final_path_already_use=0
+;; Test without database
+    auto_remove=1
+    ; Manifest
+        domain="$DOMAIN"    (DOMAIN)
+        path="$PATH"    (PATH)
+        language="fr"
+	is_public="Yes"	(PUBLIC|public=Yes|private=No)
+	db_create="No"
+	db_name="notused"
+	db_user="notused"
+	db_pwd="notused"
     ; Checks
         pkg_linter=1
         setup_sub_dir=1
