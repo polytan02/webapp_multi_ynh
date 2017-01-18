@@ -37,15 +37,14 @@ path=$(ynh_app_setting_get $app path)
 domain=$(ynh_app_setting_get $app domain)
 final_path=$(ynh_app_setting_get $app final_path)
 sitename=$(ynh_app_setting_get $app sitename)
-finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
-finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 
 if [ -z "$finalnginxconf" ];
 then
    finalnginxconf="/etc/nginx/conf.d/${domain}.d/${sitename}.conf"
    ynh_app_setting_set "$app" finalnginxconf "$finalnginxconf"
 else
-      echo "${finalnginxconf} exists, we don't create it."
+   echo "${finalnginxconf} exists, we don't create it."
+   finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
 fi
 
 if [ -z "$finalphpconf" ];
@@ -54,6 +53,7 @@ then
    ynh_app_setting_set "$app" finalphpconf "$finalphpconf"
 else
    echo "${finalphpconf} exists, we don't create it."
+   finalphpconf=$(ynh_app_setting_get $app finalphpconf)
 fi
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
