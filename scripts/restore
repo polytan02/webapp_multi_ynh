@@ -27,7 +27,7 @@ domain=$(ynh_app_setting_get $app domain)
 is_public=$(ynh_app_setting_get $app is_public)
 finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
 finalphpconf=$(ynh_app_setting_get $app finalphpconf)
-
+db_create=$(ynh_app_setting_get $app db_create)
 
 # Restore sources & data
 sudo mkdir -p $final_path
@@ -37,16 +37,6 @@ sudo cp -a ./sources/* $final_path/
 # you may need to make some file and/or directory writeable by www-data (nginx user)
 sudo chown -R www-data:www-data $final_path
 
-### MySQL (remove if not used) ###
-# If a MySQL database is used:
-# # Create and restore the database
-# dbname=$app
-# dbuser=$app
-# dbpass=$(ynh_app_setting_get "$app" mysqlpwd)
-# ynh_mysql_create_db "$dbname" "$dbuser" "$dbpass"
-# ynh_mysql_connect_as "$dbuser" "$dbpass" "$dbname" < ./dump.sql
-### MySQL end ###
-
 # Restore NGINX configuration
 sudo cp -a ./nginx.conf $finalnginxconf
 
@@ -55,6 +45,18 @@ sudo cp -a ./nginx.conf $finalnginxconf
 # # Copy PHP-FPM pool configuration and reload the service
 sudo cp -a ./php-fpm.conf $finalphpconf
 ### PHP end ###
+
+# Restore db if required
+if [ "$db_create" = "Yes" ];
+then
+	# Create and restore the database
+	db_name=$(ynh_app_setting_get $app db_name)
+	db_pwd=$(ynh_app_setting_get $app db_pwd)
+	ynh_mysql_create_db "$db_name" "$db_name" "$db_pwd"
+	ynh_mysql_connect_as "$db_name" "$db_pwd" "$db_name" < ./dump.sql
+else
+	echo "No need to backup database";
+fi
 
 # Make app public if necessary
 is_public=$(ynh_app_setting_get $app is_public)

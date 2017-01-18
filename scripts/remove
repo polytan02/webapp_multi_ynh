@@ -27,6 +27,19 @@ final_path=$(ynh_app_setting_get $app final_path)
 sitename=$(ynh_app_setting_get $app sitename)
 finalnginxconf=$(ynh_app_setting_get $app finalnginxconf)
 finalphpconf=$(ynh_app_setting_get $app finalphpconf)
+db_create=$(ynh_app_setting_get $app db_create)
+
+# Suppression de la bdd de la webapp
+if [ "$db_create" = "Yes" ];
+then
+	db_name=$(ynh_app_setting_get $app db_name)
+	db_pwd=$(ynh_app_setting_get $app db_pwd)
+        ynh_mysql_drop_db "$db_name" || true
+        ynh_mysql_drop_user "$db_name" || true
+else
+        echo "No database required";
+fi
+
 
 # Suppression du dossier de la webapp
 sudo rm -rf $final_path

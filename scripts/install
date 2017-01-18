@@ -40,6 +40,9 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$YNH_APP_ARG_DOMAIN
 path=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
+db_create=$YNH_APP_ARG_DB_CREATE
+db_name=$YNH_APP_ARG_DB_NAME
+db_pwd=$YNH_APP_ARG_DB_PWD
 
 # We check variables are not empty
 CHECK_VAR () {  # Vérifie que la variable n'est pas vide.
@@ -83,12 +86,26 @@ CHECK_FINALPATH () {    # Vérifie que le dossier de destination n'est pas déj�
         if [ -e "$final_path" ]
         then
                 echo "This path already contains a folder" >&2
-                false
+                ynh_die
         fi
 }
 CHECK_FINALPATH
 
 final_path=/var/www/webapp\_multi/$domain/$sitename
+
+
+# We check if the database is required and if it exists
+# If it exists, we stop the installation
+if [ "$db_create" = "Yes" ];
+then
+	if mysqlshow -u root -p$(sudo cat /etc/yunohost/mysql ) | grep -q "^| $db_name";
+	then
+	   echo "${db_name} exists, we stop the script." >&2
+	   ynh_die
+	else
+	   echo "${db_name} doesn't exists, we are good to proceed."
+	fi
+fi
 
 # Define variables and Save app settings
 ynh_app_setting_set "$app" domain "$domain"
@@ -102,6 +119,16 @@ ynh_app_setting_set "$app" finalnginxconf "$finalnginxconf"
 finalphpconf="/etc/php5/fpm/pool.d/${domain}_${sitename}.conf"
 ynh_app_setting_set "$app" finalphpconf "$finalphpconf"
 
+ynh_app_setting_set "$app" db_create "$db_create"
+# Database creation if requested
+if [ "$db_create" = "Yes" ];
+then
+	ynh_app_setting_set "$app" db_name "$db_name"
+	ynh_app_setting_set "$app" db_pwd "$db_pwd"
+	ynh_mysql_create_db "$db_name" "$db_name" "$db_pwd";
+else
+	echo "No database required";
+fi
 
 # Creation of folder
 #sudo rm -rf $final_path
