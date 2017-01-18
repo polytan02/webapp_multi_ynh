@@ -10,7 +10,8 @@ For latest stable version, use the official community app (see https://github.co
 
 * Functions :
 No FTP Support
-No backup or restore scripts
+No backup or restore scripts 
+To be done : option for database creation
 
 Simply copy the sources of your web page in /var/www/webapp_multi/$domain/$path/
 Creation of a dedicated php-fpm socket
