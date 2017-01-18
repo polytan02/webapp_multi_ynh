@@ -53,8 +53,8 @@
             {
                 "name": "db_create",
                 "ask": {
-                    "en": "Should we create a database for this app ? The database name and user will be $domain.$path such as domain.org.site",
-                    "fr": "Doit-on créer une base de donnée pour cette app ? La base de donnée et son utilisateur seront $domain.$path tel que domain.org.site"
+                    "en": "Should we create a database for this app ? The database name and user will be $domain$path such as domainorgsite",
+                    "fr": "Doit-on créer une base de donnée pour cette app ? La base de donnée et son utilisateur seront $domain$path tel que domainorgsite"
                 },
                 "choices": ["Yes", "No"],
                 "default": "No"
