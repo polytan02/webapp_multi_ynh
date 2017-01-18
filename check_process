@@ -6,7 +6,7 @@
         language="fr"
 	is_public="Yes"	(PUBLIC|public=Yes|private=No)
 	db_create="Yes"
-	db_name="webapp_db"
+	db_name="$APP"
 	db_pwd="webapp_pwd"
     ; Checks
         pkg_linter=1
