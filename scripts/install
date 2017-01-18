@@ -95,7 +95,7 @@ final_path=/var/www/webapp\_multi/$domain/$sitename
 
 # We check if the database is required and if it exists
 # If it exists, we stop the installation
-db_name=$(echo ${domain}.${sitename} | tr -d .)
+db_name=$(echo ${domain}.${sitename} | tr -d . | tr -d - | tr -d _ )
 if [ "$db_create" = "Yes" ];
 then
 	if mysqlshow -u root -p$(sudo cat /etc/yunohost/mysql ) | grep -q "^| $db_name";
