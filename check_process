@@ -6,7 +6,6 @@
         language="fr"
 	is_public="Yes"	(PUBLIC|public=Yes|private=No)
 	db_create="Yes"
-	db_name="$APP"
 	db_pwd="webapp_pwd"
     ; Checks
         pkg_linter=1
@@ -33,7 +32,6 @@
         language="fr"
 	is_public="Yes"	(PUBLIC|public=Yes|private=No)
 	db_create="No"
-	db_name="notused"
 	db_pwd="notused"
     ; Checks
         pkg_linter=1
@@ -60,4 +58,3 @@
         Level 5=1
         Level 6=auto
         Level 7=auto
-

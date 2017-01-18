@@ -41,7 +41,6 @@ domain=$YNH_APP_ARG_DOMAIN
 path=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
 db_create=$YNH_APP_ARG_DB_CREATE
-db_name=$YNH_APP_ARG_DB_NAME
 db_pwd=$YNH_APP_ARG_DB_PWD
 
 # We check variables are not empty
@@ -96,6 +95,7 @@ final_path=/var/www/webapp\_multi/$domain/$sitename
 
 # We check if the database is required and if it exists
 # If it exists, we stop the installation
+db_name=${domain}.${sitename}
 if [ "$db_create" = "Yes" ];
 then
 	if mysqlshow -u root -p$(sudo cat /etc/yunohost/mysql ) | grep -q "^| $db_name";
@@ -137,6 +137,7 @@ sudo mkdir -p $final_path
 # Base site
 sed -i "s@DOMAINTOCHANGE@$domain@g" ../sources/index.html
 sed -i "s@SITETOCHANGE@$sitename@g" ../sources/index.html
+sed -i "s@DBTOCHANGE@$db_name@g" ../sources/index.html
 sudo cp ../sources/* $final_path/
 
 # Set permissions
