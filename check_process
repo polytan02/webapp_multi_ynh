@@ -6,9 +6,8 @@
         language="fr"
 	is_public="Yes"	(PUBLIC|public=Yes|private=No)
 	db_create="Yes"
-	db_name="webapp_dbname"
-	db_user="webapp_dbuser"
-	db_pwd="webapp_dbpwd"
+	db_name="webapp_db"
+	db_pwd="webapp_pwd"
     ; Checks
         pkg_linter=1
         setup_sub_dir=1
@@ -35,7 +34,6 @@
 	is_public="Yes"	(PUBLIC|public=Yes|private=No)
 	db_create="No"
 	db_name="notused"
-	db_user="notused"
 	db_pwd="notused"
     ; Checks
         pkg_linter=1

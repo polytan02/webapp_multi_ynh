@@ -62,25 +62,16 @@
             {
                 "name": "db_name",
                 "ask": {
-                    "en": "Choose a name for the database - MAKE SURE IT IS NOT ALREADY IN USE",
-                    "fr": "Choisissez un nom pour la base de donnée - ASSUREZ VOUS QU'IL SOIT DISPONIBLE"
+                    "en": "Choose a name for the database. A user with the same name and full rigths will be created. Script will stop if database already exists",
+                    "fr": "Choisissez un nom pour la base de donnée. Un utilisateur avec le même nom et tous les droits sera créé. Le script s'arrêtera si la bdd existe déjà"
                 },
-                "example": "webappdb",
-                "default": "webappdb"
-            },
-            {
-                "name": "db_user",
-                "ask": {
-                    "en": "Choose a username to access the database - MAKE SURE IT IS NOT ALREADY IN USE - Ideally put the same as the database name",
-                    "fr": "Choisissez un nom pour la base de donnée - ASSUREZ VOUS QU'IL SOIT DISPONIBLE - Idéallement utilisez le même nom que la base de donnée"
-                },
-                "example": "webappdb",
-                "default": "webappdb"
+                "example": "webapp_db",
+                "default": "webapp_db"
             },
             {
                 "name": "db_pwd",
                 "ask": {
-                    "en": "Choose a STRONG password for the database access",
+                    "en": "Choose a STRONG password to access the database",
                     "fr": "Choisissez un mot de passe FORT pour accéder à la base de donnée"
                 },
                 "example": "MysECURe123PwD",
